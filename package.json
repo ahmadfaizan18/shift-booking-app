@@ -1,12 +1,25 @@
 {
   "name": "shift-booking-app",
   "version": "1.0.0",
-  "main": "index.ts",
+  "main": "expo-router/entry",
   "dependencies": {
+    "@react-navigation/bottom-tabs": "^7.21.0",
+    "@tanstack/react-query": "^5.105.3",
+    "axios": "^1.21.0",
+    "date-fns": "^4.4.0",
     "expo": "~58.0.22",
+    "expo-constants": "~58.0.14",
+    "expo-linking": "~58.0.15",
+    "expo-router": "~58.0.29",
     "expo-status-bar": "~58.0.4",
+    "lucide-react-native": "^1.67.0",
     "react": "19.3.0",
-    "react-native": "0.88.1"
+    "react-dom": "19.3.0",
+    "react-native": "0.88.1",
+    "react-native-safe-area-context": "~5.10.1",
+    "react-native-screens": "~4.30.1",
+    "react-native-svg": "15.16.0",
+    "zustand": "^5.0.16"
   },
   "devDependencies": {
     "@types/react": "~19.3.0",
