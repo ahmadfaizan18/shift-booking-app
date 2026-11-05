@@ -15,11 +15,23 @@ export const shiftKeys = {
   all: ["shifts"] as const,
 };
 
+// Extract a user-friendly error message from an Axios or generic error.
+export const extractErrorMessage = (error: unknown): string => {
+  if (error && typeof error === 'object' && 'response' in error) {
+    const axErr = error as {
+      response?: { data?: { message?: string } };
+    };
+    return axErr.response?.data?.message || String(error);
+  }
+  return error instanceof Error ? error.message : String(error);
+};
+
 // Fetch all shifts
 export const useShifts = () => {
   return useQuery({
     queryKey: shiftKeys.all,
     queryFn: getShifts,
+    retry: 1,
   });
 };
 
