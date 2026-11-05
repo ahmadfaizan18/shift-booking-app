@@ -19,10 +19,9 @@ export const filterUpcomingShifts = (
   return shifts.filter((shift) => shift.startTime > now);
 };
 
-export const groupShiftsByDate = (
-  shifts: Shift[]
-): Record<string, Shift[]> => {
-  return shifts.reduce((groups, shift) => {
+export const groupShiftsByDate = (shifts: Shift[]): Record<string, Shift[]> => {
+  const sortedShifts = [...shifts].sort((a, b) => a.startTime - b.startTime);
+  return sortedShifts.reduce((groups, shift) => {
     const date = new Date(shift.startTime).toDateString();
 
     if (!groups[date]) {

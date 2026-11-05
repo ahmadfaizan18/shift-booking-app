@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
 import {
   View,
   Text,
@@ -16,7 +15,6 @@ export default function MyShiftsScreen() {
   const { data: shifts, isLoading, isError, error, refetch } = useShifts();
   const cancelShiftMutation = useCancelShift();
   const [cancellingShiftId, setCancellingShiftId] = useState<string | null>(null);
-  const insets = useSafeAreaInsets();
 
   const myShifts = (shifts ?? []).filter((shift) => shift.booked);
   const groupedShifts = groupShiftsByDate(myShifts);
@@ -68,7 +66,7 @@ export default function MyShiftsScreen() {
 
   return (
     <ScrollView
-      style={[styles.container, { paddingTop: 16 + insets.top }]}
+      style={[styles.container, { paddingTop: 16 }]}
       contentContainerStyle={{ paddingBottom: 120 }}
     >
       <Text style={styles.heading}>My Shifts</Text>

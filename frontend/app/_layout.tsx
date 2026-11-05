@@ -8,7 +8,7 @@ const queryClient = new QueryClient();
 export default function RootLayout() {
   return (
     <QueryClientProvider client={queryClient}>
-      <SafeAreaView edges={["bottom"]} style={{ flex: 1 }}>
+      <SafeAreaView edges={["top", "bottom"]} style={{ flex: 1 }}>
         <Tabs
           screenOptions={{
             headerShown: false,

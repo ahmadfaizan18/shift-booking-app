@@ -1,0 +1,19 @@
+# Node modules (both root and subdirs)
+node_modules/
+
+# Expo project cache
+.expo/
+
+# Log files
+*.log
+
+# PowerShell/macOS/Linux binary debug files
+*.pdb
+
+# macOS DS Store
+.DS_Store
+
+# Environment files
+**/.env
+**/.env.*
+!**/.env.example

@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
 import {
   View,
   Text,
@@ -8,12 +7,11 @@ import {
   Pressable,
   StyleSheet,
 } from "react-native";
-import { useShifts, extractErrorMessage, useBookShift } from "../src/hooks/useShift";
+import { useShifts, extractErrorMessage, useBookShift, useCancelShift } from "../src/hooks/useShift";
 import { useShiftStore } from "../src/store/useShiftStore";
 import {
   filterShiftsByCity,
   filterUpcomingShifts,
-  filterOutBookedShifts,
   groupShiftsByDate,
   isOverlappingShift,
 } from "../src/utils/shiftUtils";
@@ -25,14 +23,14 @@ export default function AvailableShiftsScreen() {
   const setSelectedCity = useShiftStore((state) => state.setSelectedCity);
 
   const bookShiftMutation = useBookShift();
+  const cancelShiftMutation = useCancelShift();
   const [bookingShiftId, setBookingShiftId] = useState<string | null>(null);
-  const insets = useSafeAreaInsets();
+  const [cancellingShiftId, setCancellingShiftId] = useState<string | null>(null);
 
   const allShifts = shifts ?? [];
   const upcomingShifts = filterUpcomingShifts(allShifts);
-  const bookedShifts = allShifts.filter((shift) => shift.booked);
-  const availableShifts = filterOutBookedShifts(upcomingShifts);
-  const cityFilteredShifts = filterShiftsByCity(availableShifts, selectedCity);
+  const allBookedShifts = allShifts.filter((shift) => shift.booked);
+  const cityFilteredShifts = filterShiftsByCity(upcomingShifts, selectedCity);
   const groupedShifts = groupShiftsByDate(cityFilteredShifts);
 
   const handleBookShift = (shiftId: string) => {
@@ -46,6 +44,21 @@ export default function AvailableShiftsScreen() {
       },
       onSettled: () => {
         setBookingShiftId(null);
+      },
+    });
+  };
+
+  const handleCancelShift = (shiftId: string) => {
+    setCancellingShiftId(shiftId);
+    cancelShiftMutation.mutate(shiftId, {
+      onSuccess: () => {
+        Alert.alert("Success", "Shift cancelled successfully.");
+      },
+      onError: (err) => {
+        Alert.alert("Cancellation failed", extractErrorMessage(err));
+      },
+      onSettled: () => {
+        setCancellingShiftId(null);
       },
     });
   };
@@ -73,12 +86,12 @@ export default function AvailableShiftsScreen() {
 
   return (
     <ScrollView
-      style={[styles.container, { paddingTop: 16 + insets.top }]}
+      style={[styles.container, { paddingTop: 16 }]}
       contentContainerStyle={{ paddingBottom: 120 }}
     >
       <Text style={styles.heading}>Available Shifts</Text>
       <Text style={styles.subtitle}>
-        {cityFilteredShifts.length} shifts available
+        {cityFilteredShifts.length} shifts
       </Text>
 
       <ScrollView
@@ -102,9 +115,12 @@ export default function AvailableShiftsScreen() {
           <Text style={styles.dateHeading}>{date}</Text>
 
           {dateShifts.map((shift) => {
-            const isOverlapping = isOverlappingShift(shift, bookedShifts);
+            const isBooked = shift.booked;
+            const isCancelling = cancellingShiftId === shift.id && cancelShiftMutation.isPending;
             const isBooking = bookingShiftId === shift.id && bookShiftMutation.isPending;
-            const isDisabled = isBooking || isOverlapping;
+            const isOverlapping =
+              !isBooked && isOverlappingShift(shift, allBookedShifts);
+            const isDisabled = isCancelling || isBooking || isOverlapping;
 
             return (
               <View key={shift.id} style={styles.card}>
@@ -122,7 +138,17 @@ export default function AvailableShiftsScreen() {
                   })}
                 </Text>
 
-                {isOverlapping ? (
+                {isBooked ? (
+                  <Pressable
+                    style={styles.cancelButton}
+                    onPress={() => handleCancelShift(shift.id)}
+                    disabled={isCancelling}
+                  >
+                    <Text style={styles.cancelButtonText}>
+                      {isCancelling ? "Cancelling..." : "Cancel"}
+                    </Text>
+                  </Pressable>
+                ) : isOverlapping ? (
                   <Text style={styles.overlapText}>
                     Overlaps with an existing booking
                   </Text>
@@ -282,5 +308,19 @@ const styles = StyleSheet.create({
     marginTop: 4,
     textAlign: "center",
     fontWeight: "600",
+  },
+
+  cancelButton: {
+    backgroundColor: "#E85D75",
+    paddingVertical: 14,
+    borderRadius: 12,
+    alignItems: "center",
+    marginTop: 4,
+  },
+
+  cancelButtonText: {
+    color: "#FFFFFF",
+    fontSize: 14,
+    fontWeight: "700",
   },
 });

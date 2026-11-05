@@ -9,23 +9,6 @@ const server = new Hapi.Server({
   },
 });
 
-server.ext("onRequest", (request, h) => {
-  console.log("INCOMING REQUEST:", request.method, request.path);
-  return h.continue;
-});
-server.ext('onPreAuth', (request, h) => {
-  console.log('PRE AUTH:', request.method, request.path);
-  return h.continue;
-});
-server.ext('onPostAuth', (request, h) => {
-  console.log('POST AUTH:', request.method, request.path);
-  return h.continue;
-});
-server.ext('onPreHandler', (request, h) => {
-  console.log('PRE HANDLER:', request.method, request.path);
-  return h.continue;
-});
-
 async function main() {
   await server.register([
     {

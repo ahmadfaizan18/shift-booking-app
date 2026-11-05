@@ -1,0 +1,14 @@
+{
+  "name": "shift-booking-app",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Shift Booking App - Backend + Frontend monorepo",
+  "scripts": {
+    "dev": "concurrently --kill-others \"npm run backend\" \"npm run frontend\"",
+    "backend": "npm --prefix backend start",
+    "frontend": "npm --prefix frontend start"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  }
+}
