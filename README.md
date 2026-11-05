@@ -40,20 +40,26 @@ cancel bookings, and manage their scheduled shifts.
 
 ## Installation & Setup
 
-### 1. Install Dependencies
+## Installation
 
-Run the following commands from the **root directory** of the project:
+### 1. Clone the Repository
 
-``` bash
+```bash
+git clone https://github.com/ahmadfaizan18/shift-booking-app.git
+cd shift-booking-app
+```
+
+### 2. Install Dependencies
+
+From the project root directory, run:
+
+```bash
 npm install
 npm --prefix backend install
 npm --prefix frontend install
 ```
 
-These commands install the dependencies for the root project, backend,
-and frontend.
-
-### 2. Configure Environment Variables
+### 3. Configure Environment Variables
 
 Create a `.env` file inside the `frontend` directory by copying the
 example file:
@@ -95,30 +101,48 @@ EXPO_PUBLIC_API_URL=http://192.168.1.5:8080
 
 Use your actual laptop IP address, not the example above.
 
-  Environment                   API URL
-  ----------------------------- ------------------------------
-  Physical Android/iOS device   `http://YOUR_LAPTOP_IP:8080`
-  Android emulator              `http://10.0.2.2:8080`
-  iOS simulator                 `http://localhost:8080`
+### Environment API URL
 
-**Note:** The `.env` file is local and should not be committed to Git.
-The phone and laptop must be connected to the same Wi-Fi network when
-using a physical device.
+Configure `EXPO_PUBLIC_API_URL` in `frontend/.env` according to your environment:
+
+| Environment | API URL |
+|---|---|
+| Physical Android/iOS device | `http://YOUR_LAPTOP_IP:8080` |
+| Android emulator | `http://10.0.2.2:8080` |
+| iOS simulator | `http://localhost:8080` |
+
+**Note:**
+- The `.env` file is local and should not be committed to Git.
+- For physical devices, the phone and laptop must be connected to the same Wi-Fi network.
+- Replace `YOUR_LAPTOP_IP` with your laptop's local IPv4 address.
 
 ### 3. Start the Application
 
-From the root directory, run:
+The backend and frontend must be started in separate terminals.
 
-``` bash
-npm run dev
+**Terminal 1 – Start the Backend**
+
+From the project root directory, run:
+
+```bash
+npm run backend
 ```
 
-This starts both the backend server and the Expo development server.
+The backend server starts on port `8080`.
 
--   Backend runs on port `8080`.
--   Expo starts the frontend development server.
+**Terminal 2 – Start the Frontend**
 
-Press `Ctrl + C` to stop both servers.
+Open another terminal in the project root directory and run:
+
+```bash
+npm run frontend
+```
+
+Expo will start the frontend development server and display a QR code. Scan the QR code using Expo Go on your mobile device.
+
+**Stopping the Application**
+
+Press `Ctrl + C` in each terminal to stop the respective server.
 
 ### 4. View the App Using Expo Go
 
@@ -133,15 +157,6 @@ Press `Ctrl + C` to stop both servers.
 
 **Note:** If you make changes to the `.env` file, restart the Expo
 development server for them to take effect.
-
-## Independent Startup
-
-You can also start either service separately from the repository root:
-
-``` bash
-npm run backend
-npm run frontend
-```
 
 ## Tech Stack
 
