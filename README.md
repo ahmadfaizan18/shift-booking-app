@@ -8,20 +8,35 @@ cancel bookings, and manage their scheduled shifts.
 
 ## Screenshots
 
-### Available Shifts
-![Available Shifts](screenshots/available-shifts.jpg)
-
-### My Shifts
-![My Shifts](screenshots/my-shifts.jpg)
-
-### Filter by City
-![Filter by City](screenshots/filter-by-city.jpg)
-
-### Booking Success Confirmation
-![Booking Success](screenshots/booking-success-confirmation.jpg)
-
-### Cancelled Shift Confirmation
-![Cancellation Success](screenshots/cancelled-shift-confirmation.jpg)
+<table>
+  <tr>
+    <td width="50%">
+      <h3>Available Shifts</h3>
+      <img src="screenshots/available-shifts.jpg" width="100%" />
+    </td>
+    <td width="50%">
+      <h3>Filter by City</h3>
+      <img src="screenshots/filter-by-city.jpg" width="100%" />
+    </td>
+  </tr>
+  <tr>
+    <td width="50%">
+      <h3>My Shifts</h3>
+      <img src="screenshots/my-shifts.jpg" width="100%" />
+    </td>
+    <td width="50%">
+      <h3>Booking Success</h3>
+      <img src="screenshots/booking-success-confirmation.jpg" width="100%" />
+    </td>
+  </tr>
+  <tr>
+    <td width="50%">
+      <h3>Cancellation Success</h3>
+      <img src="screenshots/cancelled-shift-confirmation.jpg" width="100%" />
+    </td>
+    <td></td>
+  </tr>
+</table>
 
 ## Installation & Setup
 
@@ -130,14 +145,32 @@ npm run frontend
 
 ## Tech Stack
 
-  Frontend         Backend
-  ---------------- ----------
-  React Native     Node.js
-  Expo             Hapi.js
-  TypeScript       Babel
-  Zustand          Mock API
-  TanStack Query   
-  Axios            
+<table>
+  <tr>
+    <th align="left">Frontend</th>
+    <th align="left">Backend</th>
+  </tr>
+  <tr>
+    <td valign="top">
+      <ul>
+        <li>React Native</li>
+        <li>Expo</li>
+        <li>TypeScript</li>
+        <li>Zustand</li>
+        <li>TanStack Query</li>
+        <li>Axios</li>
+      </ul>
+    </td>
+    <td valign="top">
+      <ul>
+        <li>Node.js</li>
+        <li>Hapi.js</li>
+        <li>Babel</li>
+        <li>Mock API</li>
+      </ul>
+    </td>
+  </tr>
+</table>       
 
 ## Features
 
@@ -188,43 +221,31 @@ ShiftBookingWorkspace/
 
 All endpoints are prefixed with `/shifts`.
 
-  Method   Endpoint                Description
-  -------- ----------------------- ------------------------
-  GET      `/shifts`               Retrieve all shifts
-  GET      `/shifts/{id}`          Retrieve a shift by ID
-  POST     `/shifts/{id}/book`     Book a shift
-  POST     `/shifts/{id}/cancel`   Cancel a booked shift
+| Method | Endpoint | Description |
+|:---:|---|---|
+| `GET` | `/shifts` | Retrieve all shifts |
+| `GET` | `/shifts/{id}` | Retrieve a shift by ID |
+| `POST` | `/shifts/{id}/book` | Book a shift |
+| `POST` | `/shifts/{id}/cancel` | Cancel a booked shift |
 
 ## Shift Data Model
 
-  Field         Type      Description
-  ------------- --------- ---------------------------------
-  `id`          String    Unique shift identifier
-  `area`        String    Helsinki, Tampere, or Turku
-  `booked`      Boolean   Booking status
-  `startTime`   Number    Start time in Unix milliseconds
-  `endTime`     Number    End time in Unix milliseconds
+| Field | Type | Description |
+|---|---|---|
+| `id` | String | Unique shift identifier |
+| `area` | String | Helsinki, Tampere, or Turku |
+| `booked` | Boolean | Booking status |
+| `startTime` | Number | Start time in Unix milliseconds |
+| `endTime` | Number | End time in Unix milliseconds |
 
 ## Troubleshooting
 
-  -----------------------------------------------------------------------
-  Problem                             Solution
-  ----------------------------------- -----------------------------------
-  Backend fails to start              Ensure backend dependencies are
-                                      installed
-
-  Frontend cannot connect to backend  Check `EXPO_PUBLIC_API_URL` and
-                                      Wi-Fi connectivity
-
-  Port 8080 already in use            Stop the existing process using
-                                      port 8080
-
-  Android emulator cannot reach       Use `http://10.0.2.2:8080`
-  backend                             
-
-  Environment changes are not         Restart Expo with
-  reflected                           `npx expo start -c`
-
-  TypeScript errors                   Run `npx tsc --noEmit` inside
-                                      `frontend/`
+| Problem | Solution |
+|---|---|
+| Backend fails to start | Ensure backend dependencies are installed. |
+| Frontend cannot connect to backend | Check `EXPO_PUBLIC_API_URL` and Wi-Fi connectivity. |
+| Port 8080 already in use | Stop the existing process using port 8080. |
+| Android emulator cannot reach backend | Use `http://10.0.2.2:8080`. |
+| Environment changes are not reflected | Restart Expo with `npx expo start -c`. |
+| TypeScript errors | Run `npx tsc --noEmit` inside `frontend/`. |
   -----------------------------------------------------------------------
